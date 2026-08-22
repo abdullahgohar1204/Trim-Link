@@ -8,6 +8,7 @@ export default function Generate() {
   const [originalUrl, setOriginalUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [generatedUrl, setGeneratedUrl] = useState("");
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const urlParam = searchParams.get("url");
@@ -17,13 +18,12 @@ export default function Generate() {
   }, [searchParams]);
 
   const isValidUrl = (url) => {
-    return url.length >= 3;
+    return url.trim().length >= 3;
   };
 
-  const handleGenerate = async () => {
+  const handleGenerate = async (e) => {
+    if (e) e.preventDefault();
     if (isValidUrl(originalUrl)) {
-      //Logic main
-
       try {
         const response = await fetch("/api/generate", {
           method: "POST",
@@ -37,26 +37,33 @@ export default function Generate() {
 
         if (data.success) {
           setGeneratedUrl(data.shortUrl);
-          setShortUrl("");
         } else {
-          alert("Error " + data.message);
+          alert("Error: " + data.message);
         }
       } catch (error) {
-        alert("error ");
+        alert("Failed to generate URL.");
       }
     }
   };
 
+  const handleCopy = () => {
+    if (generatedUrl) {
+      navigator.clipboard.writeText(generatedUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4">
-      <div className="bg-black border border-gray-800 rounded-2xl p-8 max-w-2xl w-full">
-        <h2 className="text-2xl font-bold text-white text-center mb-6">
+    <div className="min-h-[80vh] flex items-center justify-center px-3 sm:px-4 py-6">
+      <div className="bg-black border border-gray-800 rounded-2xl p-5 sm:p-8 max-w-2xl w-full">
+        <h2 className="text-xl sm:text-2xl font-bold text-white text-center mb-6">
           Generate Short URL
         </h2>
 
         {/* Original URL */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-400 mb-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
             Original URL
           </label>
           <input
@@ -64,13 +71,13 @@ export default function Generate() {
             value={originalUrl}
             onChange={(e) => setOriginalUrl(e.target.value)}
             placeholder="https://example.com/your-long-url"
-            className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition"
+            className="w-full px-4 py-2.5 rounded-lg bg-gray-900 text-white border border-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-white transition"
           />
         </div>
 
         {/* Short URL (custom) */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-400 mb-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
             Custom Short URL (optional)
           </label>
           <input
@@ -78,36 +85,48 @@ export default function Generate() {
             value={shortUrl}
             onChange={(e) => setShortUrl(e.target.value)}
             placeholder="custom-name"
-            className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition"
+            className="w-full px-4 py-2.5 rounded-lg bg-gray-900 text-white border border-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-white transition"
           />
           <p className="text-gray-500 text-xs mt-1">
             Leave blank to generate automatically
           </p>
         </div>
 
-        {/* Generated Short URL */}
+        {/* Generated Short URL Output */}
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-400 mb-1">
+          <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
             Generated Short URL
           </label>
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              value={generatedUrl}
-              readOnly
-              placeholder="Your generated URL will appear here"
-              className="w-full px-4 py-2 rounded-lg bg-gray-800 text-gray-400 border border-gray-700 cursor-not-allowed focus:outline-none"
-            />
+          <div className="flex flex-col sm:flex-row items-center gap-2">
+            {generatedUrl ? (
+              <a
+                href={generatedUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full px-4 py-2.5 rounded-lg bg-gray-900 text-blue-400 border border-gray-700 text-base font-mono underline hover:text-blue-300 transition truncate cursor-pointer block"
+              >
+                {generatedUrl}
+              </a>
+            ) : (
+              <input
+                type="text"
+                readOnly
+                placeholder="Your generated URL will appear here"
+                className="w-full px-4 py-2.5 rounded-lg bg-gray-900 text-gray-500 border border-gray-700 focus:outline-none text-base cursor-not-allowed"
+              />
+            )}
             <button
-              onClick={() => {
-                if (generatedUrl) {
-                  navigator.clipboard.writeText(generatedUrl);
-                  alert("Copied!");
-                }
-              }}
-              className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition whitespace-nowrap text-sm flex items-center gap-1"
+              type="button"
+              onClick={handleCopy}
+              disabled={!generatedUrl}
+              className={`w-full sm:w-auto px-5 py-2.5 rounded-lg transition whitespace-nowrap text-sm flex items-center justify-center gap-1.5 ${
+                generatedUrl
+                  ? "bg-gray-800 hover:bg-gray-700 text-white cursor-pointer"
+                  : "bg-gray-900 text-gray-600 cursor-not-allowed"
+              }`}
             >
-              <span>📋</span> Copy
+              <span>{copied ? "✓" : "📋"}</span>
+              <span>{copied ? "Copied!" : "Copy"}</span>
             </button>
           </div>
         </div>
@@ -116,10 +135,10 @@ export default function Generate() {
         <button
           onClick={handleGenerate}
           disabled={!isValidUrl(originalUrl)}
-          className={`w-full font-semibold py-2.5 rounded-lg transition active:scale-95 ${
+          className={`w-full font-semibold py-3 rounded-lg transition active:scale-95 text-sm sm:text-base ${
             isValidUrl(originalUrl)
-              ? "bg-white text-black hover:bg-gray-200"
-              : "bg-gray-600 text-gray-400 cursor-not-allowed"
+              ? "bg-white text-black hover:bg-gray-200 cursor-pointer"
+              : "bg-gray-800 text-gray-500 cursor-not-allowed"
           }`}
         >
           Generate

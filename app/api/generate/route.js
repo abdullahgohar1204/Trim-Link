@@ -16,8 +16,18 @@ export async function POST(request) {
         let shortId = ""
 
         if (shortUrl && shortUrl.trim().length > 0) {
-            shortId = shortUrl.trim()
+            shortId = shortUrl.trim().replace(/\s+/g, '-').toLowerCase();
 
+            // Validate: Allow ONLY letters, numbers, hyphens, and underscores
+            const isValidShortId = /^[a-zA-Z0-9_-]+$/.test(shortId);
+
+            if (!isValidShortId) {
+                return NextResponse.json({
+                    success: false,
+                    error: "Invalid short URL format",
+                    message: "Custom short URL can only contain letters, numbers, hyphens (-), and underscores (_)."
+                }, { status: 400 });
+            }
             //check if already existing
             const existing = await Url.findOne({ shortUrl: body.shortUrl });
             if (existing) {
@@ -41,7 +51,8 @@ export async function POST(request) {
         }
 
         //generate url 
-        const fullShortUrl = `http://localhost:3000/${shortId}`;
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+        const fullShortUrl = `${baseUrl}/${shortId}`;
 
         //save in db 
         const newUrl = new Url({
