@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🔗 URL Shortener
+
+A simple, fast URL shortener built with Next.js, MongoDB, and Tailwind CSS. Paste a long URL, get a short one instantly — with optional custom short links.
+
+## Features
+
+- ⚡ Instant URL shortening
+- 🔗 Custom short link names (optional, with validation)
+- 🆓 No sign-up required
+- 📋 One-click copy to clipboard
+- 🚀 Automatic redirect from short link to original URL
+- ✅ Duplicate short-name checking
+
+## Tech Stack
+
+- **Framework:** Next.js (App Router)
+- **Database:** MongoDB with Mongoose
+- **Styling:** Tailwind CSS
+
+## Project Structure
+
+```
+url-shortener/
+├── app/
+│   ├── page.jsx              # Home page
+│   ├── layout.tsx            # Root layout + navbar
+│   ├── globals.css
+│   ├── about/page.jsx        # About page
+│   ├── contact/page.jsx      # Contact page
+│   ├── generate/page.jsx     # URL generation page
+│   ├── api/generate/route.js # API route for shortening logic
+│   └── [shortUrl]/page.jsx   # Dynamic route for redirection
+├── components/
+│   └── Navbar.jsx
+├── lib/
+│   └── mongodb.js            # Database connection
+├── models/
+│   └── url.js                # Mongoose schema
+└── public/
+```
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js installed
+- A MongoDB database (local or [MongoDB Atlas](https://www.mongodb.com/atlas))
+
+### Installation
+
+1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/url-shortener.git
+cd url-shortener
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Create a `.env.local` file in the root directory:
+```
+MONGODB_URI=your_mongodb_connection_string
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Run the development server
+```bash
+npm run dev
+```
 
-## Learn More
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+## Environment Variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Variable | Description |
+|---|---|
+| `MONGODB_URI` | Your MongoDB connection string |
+| `NEXT_PUBLIC_BASE_URL` | The base URL of your deployed app (used to generate short links) |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+This project is ready to deploy on [Vercel](https://vercel.com):
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Push your code to GitHub
+2. Import the repository into Vercel
+3. Add your environment variables (`MONGODB_URI`, `NEXT_PUBLIC_BASE_URL`) in Vercel's project settings — set `NEXT_PUBLIC_BASE_URL` to your actual deployed domain
+4. Deploy
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Roadmap
+
+- [ ] Link validation (verify the original URL is reachable before shortening)
+- [ ] Click analytics per short link
+- [ ] User accounts to manage saved links
+
+## License
+
+Open-source and free to use.
