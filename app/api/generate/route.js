@@ -1,41 +1,67 @@
-import connectDB from "@/lib/mongodb";
-import { NextResponse } from "next/server";
 import Url from "@/models/url"
+import { NextResponse } from "next/server";
+import connectdb from "@/lib/mongodb";
+
 
 export async function POST(request) {
-
     try {
-        const connection = await connectDB();
-        console.log("\n\nConnected to database:", connection.connection.db.databaseName, "\n\n");
+        //connect db
+        await connectdb();
+
+        //get body
         const body = await request.json()
-        const shortId = Math.random().toString(36).substring(2, 7);
-        const shortUrl = `http://localhost:3000/${shortId}`;
+        const { originalUrl, shortUrl } = body
 
-        const newEntry = new Url({
-            shortId: shortId,
-            originalUrl: body.originalUrl,
-            shortUrl: shortUrl
+        //shortid checking 
+        let shortId = ""
+
+        if (shortUrl && shortUrl.trim().length > 0) {
+            shortId = shortUrl.trim()
+
+            //check if already existing
+            const existing = await Url.findOne({ shortUrl: body.shortUrl });
+            if (existing) {
+                return NextResponse.json({
+                    success: false,
+                    error: "Short name already taken",
+                    message: `"${body.shortUrl}" is already taken. Please choose another.`
+                }, { status: 400 });
+            }
+        }
+        else {
+            // Auto-generate short ID
+            let isUnique = false
+            while (!isUnique) {
+                shortId = Math.random().toString(36).substring(2, 7);
+                const existing = await Url.findOne({ shortUrl: shortId })
+                if (!existing) {
+                    isUnique = true
+                }
+            }
+        }
+
+        //generate url 
+        const fullShortUrl = `http://localhost:3000/${shortId}`;
+
+        //save in db 
+        const newUrl = new Url({
+            originalUrl: originalUrl,
+            shortUrl: shortId
         })
+        await newUrl.save();
 
-        await newEntry.save();
-
+        //response on success
         return NextResponse.json({
             success: true,
-            shortId,
-            shortUrl,
-            message: "Short URL generated and saved"
+            shortUrl: fullShortUrl,
+            message: "URL shortened successfully"
         });
-
-    } catch (error) {
-        return NextResponse.json(
-            { success: false, error: error.message },
-            { status: 500 }
-        );
+    }//response on error
+    catch (error) {
+        return NextResponse.json({
+            success: false,
+            error: "Server error",
+            message: error.message
+        }, { status: 500 });
     }
 }
-
-
-
-
-
-

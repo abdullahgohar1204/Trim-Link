@@ -4,20 +4,21 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [url, setUrl] = useState("");
-  const router = useRouter();
 
-  const handleShorten = () => {
+  const router = useRouter()
+  const [url, seturl] = useState("")
+
+  const handleShorten=() => {
     if (url.trim()) {
-      router.push(`/generate?url=${encodeURIComponent(url)}`);
-    }
-  };
+    router.push(`/generate?url=${encodeURIComponent(url)}`)
+  }
+}
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
+const handleKeyDown = (e) => {
+  if (e.key === "Enter") {
       handleShorten();
-    }
-  };
+  }
+};
 
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-center px-4">
@@ -43,15 +44,14 @@ export default function Home() {
           <input
             type="url"
             value={url}
-            onChange={(e) => setUrl(e.target.value)}
+            onChange={(e)=>{seturl(e.target.value)}}
             onKeyDown={handleKeyDown}
             placeholder="https://example.com/your-long-url"
             className="w-full px-5 py-3.5 rounded-full bg-gray-900 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition"
           />
           <button
-            onClick={handleShorten}
-            className="w-full sm:w-auto bg-white text-black font-semibold px-8 py-3.5 rounded-full hover:bg-gray-200 transition active:scale-95 whitespace-nowrap"
-          >
+          onClick={handleShorten}
+          className="w-full sm:w-auto bg-white text-black font-semibold px-8 py-3.5 rounded-full hover:bg-gray-200 transition active:scale-95 whitespace-nowrap">
             Shorten →
           </button>
         </div>

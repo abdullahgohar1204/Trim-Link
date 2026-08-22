@@ -15,9 +15,12 @@ export default function Contact() {
         <p className="text-gray-400 text-center text-sm leading-relaxed mt-6">
           📧 Email us at:
         </p>
-        <p className="text-white text-center text-base font-medium mt-1">
+        <a
+          href="mailto:abdullahgohar1204@gmail.com"
+          className="text-white text-center text-base font-medium mt-1 block hover:text-gray-300 transition"
+        >
           abdullahgohar1204@gmail.com
-        </p>
+        </a>
         <p className="text-gray-400 text-center text-sm leading-relaxed mt-4">
           We'll get back to you as soon as possible.
         </p>
