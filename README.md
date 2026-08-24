@@ -10,6 +10,7 @@ A simple, fast URL shortener built with Next.js, MongoDB, and Tailwind CSS. Past
 - 📋 One-click copy to clipboard
 - 🚀 Automatic redirect from short link to original URL
 - ✅ Duplicate short-name checking
+- 🌐 Link validation (verify the original URL is reachable before shortening)
 
 ## Tech Stack
 
@@ -90,7 +91,6 @@ This project is ready to deploy on [Vercel](https://vercel.com):
 
 ## Roadmap
 
-- [ ] Link validation (verify the original URL is reachable before shortening)
 - [ ] Click analytics per short link
 - [ ] User accounts to manage saved links
 
