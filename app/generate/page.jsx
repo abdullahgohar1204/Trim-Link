@@ -17,19 +17,36 @@ export default function Generate() {
     }
   }, [searchParams]);
 
-  const isValidUrl = (url) => {
-    return url.trim().length >= 3;
+  const isValidUrl = (urlString) => {
+    let testUrl = urlString.trim();
+    if (!testUrl.startsWith("http://") && !testUrl.startsWith("https://")) {
+      testUrl = "https://" + testUrl;
+    }
+
+    try {
+      const url = new URL(testUrl);
+      return url.hostname.includes(".");
+    } catch (error) {
+      return false;
+    }
   };
 
   const handleGenerate = async (e) => {
     if (e) e.preventDefault();
     if (isValidUrl(originalUrl)) {
+      let normalizedUrl = originalUrl.trim();
+      if (
+        !normalizedUrl.startsWith("http://") &&
+        !normalizedUrl.startsWith("https://")
+      ) {
+        normalizedUrl = "https://" + normalizedUrl;
+      }
       try {
         const response = await fetch("/api/generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            originalUrl: originalUrl,
+            originalUrl: normalizedUrl,
             shortUrl: shortUrl,
           }),
         });
