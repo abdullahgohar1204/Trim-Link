@@ -9,33 +9,46 @@ export const metadata = {
 
 export default function About() {
   return (
-    <main className="min-h-[80vh] flex items-center justify-center px-3 sm:px-4 py-6">
-      <div className="bg-black border border-gray-800 rounded-2xl p-5 sm:p-8 max-w-2xl w-full">
+    <main className="min-h-[80vh] flex items-center justify-center px-3 sm:px-4 py-8">
+      <div className="relative bg-black/80 backdrop-blur-xl border border-zinc-800/80 rounded-3xl p-6 sm:p-10 max-w-2xl w-full shadow-2xl">
+
+        {/* Lime Accent Badge */}
+        <div className="flex justify-center mb-4">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-lime-500/10 text-lime-400 border border-lime-500/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse"></span>
+            ✦ About The Project
+          </span>
+        </div>
+
         {/* Title */}
-        <h1 className="text-xl sm:text-2xl font-bold text-white text-center mb-4">
-          About TrimLink
+        <h1 className="text-2xl sm:text-3xl font-black text-white text-center tracking-tight mb-6">
+          About Trim<span className="text-lime-400">Link</span>
         </h1>
 
         {/* Description Paragraphs */}
-        <p className="text-gray-400 text-center text-xs sm:text-sm leading-relaxed">
-          TrimLink is a simple and efficient tool that takes long, messy
-          URLs and transforms them into short, clean, and shareable links.
-        </p>
+        <div className="space-y-4 text-zinc-400 text-center text-sm sm:text-base leading-relaxed">
+          <p>
+            TrimLink is a simple and efficient tool that takes long, messy
+            URLs and transforms them into short, clean, and shareable links.
+          </p>
 
-        <p className="text-gray-400 text-center text-xs sm:text-sm leading-relaxed mt-3">
-          Whether you&apos;re sharing on social media, sending emails, or posting in
-          chat, short links save space and look more professional.
-        </p>
+          <p>
+            Whether you&apos;re sharing on social media, sending emails, or posting in
+            chat, short links save space and look much more professional.
+          </p>
 
-        <p className="text-gray-400 text-center text-xs sm:text-sm leading-relaxed mt-3">
-          Built with Next.js, Tailwind CSS, and MongoDB — this project is
-          open-source and free to use.
-        </p>
+          <p>
+            Built using <span className="text-white font-medium">Next.js</span>,{" "}
+            <span className="text-white font-medium">Tailwind CSS</span>, and{" "}
+            <span className="text-white font-medium">MongoDB</span> with custom expiration options.
+          </p>
+        </div>
 
-        {/* Version Badge */}
-        <div className="mt-6 pt-4 border-t border-gray-800 text-center">
-          <p className="text-gray-400 text-xs sm:text-sm">
-            <span className="text-white font-medium">Version:</span> 1.0.1
+        {/* Version Badge & Info */}
+        <div className="mt-8 pt-5 border-t border-zinc-800/80 flex items-center justify-between text-xs sm:text-sm text-zinc-500">
+          <span>Open-source & Free</span>
+          <p>
+            <span className="text-zinc-300 font-medium">Version:</span> <span className="text-lime-400 font-mono">1.0.1</span>
           </p>
         </div>
       </div>

@@ -9,7 +9,8 @@ export async function POST(request) {
 
         // 2. Parse request body
         const body = await request.json();
-        let { originalUrl, shortUrl } = body;
+        let { originalUrl, shortUrl, expiration } = body;
+
 
         // Validate presence of original URL
         if (!originalUrl) {
@@ -77,10 +78,32 @@ export async function POST(request) {
             process.env.NEXT_PUBLIC_BASE_URL || "https://trim-link-web.vercel.app";
         const fullShortUrl = `${baseUrl}/${shortId}`;
 
+
+        //Expiring part
+        let expiresAt = null;
+        const now = new Date()
+
+        //checking users input 
+        if (expiration === "1h") {
+            expiresAt = new Date(now.getTime() + 1 * 60 * 60 * 1000);
+        } else if (expiration === "6h") {
+            expiresAt = new Date(now.getTime() + 6 * 60 * 60 * 1000);
+        } else if (expiration === "12h") {
+            expiresAt = new Date(now.getTime() + 12 * 60 * 60 * 1000);
+        } else if (expiration === "24h") {
+            expiresAt = new Date(now.getTime() + 1 * 24 * 60 * 60 * 1000);
+        } else if (expiration === "7d") {
+            expiresAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+        } else {
+            expiresAt = null;
+        }
+
+
         // 6. Save document to MongoDB
         const newUrl = new Url({
             originalUrl: formattedOriginalUrl,
             shortUrl: shortId,
+            expiresAt: expiresAt,
         });
         await newUrl.save();
 

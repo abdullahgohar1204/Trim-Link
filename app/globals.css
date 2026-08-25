@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+/* Force global dark defaults to prevent any white screen flashes */
+html,
+body {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    color-scheme: dark;
+}
