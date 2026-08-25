@@ -76,7 +76,7 @@ function GenerateContent() {
     <div className="min-h-[80vh] flex items-center justify-center px-3 sm:px-4 py-6">
       <div className="bg-black border border-gray-800 rounded-2xl p-5 sm:p-8 max-w-2xl w-full">
         <h2 className="text-xl sm:text-2xl font-bold text-white text-center mb-6">
-          Generate Short URL
+          Trim Link
         </h2>
 
         {/* Original URL */}
@@ -113,7 +113,7 @@ function GenerateContent() {
         {/* Generated Short URL Output */}
         <div className="mb-6">
           <label className="block text-xs sm:text-sm font-medium text-gray-400 mb-1">
-            Generated Short URL
+            Trimmed Link
           </label>
           <div className="flex flex-col sm:flex-row items-center gap-2">
             {generatedUrl ? (
@@ -157,7 +157,7 @@ function GenerateContent() {
             : "bg-gray-800 text-gray-500 cursor-not-allowed"
             }`}
         >
-          Generate
+          Trim
         </button>
       </div>
     </div>

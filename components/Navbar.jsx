@@ -19,7 +19,7 @@ const Navbar = () => {
         <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-8 items-center">
           <Link href={"/"}>
             <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-              URL Shortener
+              TrimLink
             </h1>
           </Link>
           <div className="flex items-center gap-0.5 sm:gap-1 bg-gray-900 border border-gray-800 rounded-full p-1 max-w-full overflow-x-auto">
@@ -29,11 +29,10 @@ const Navbar = () => {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`px-3 sm:px-5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition whitespace-nowrap ${
-                    isActive
+                  className={`px-3 sm:px-5 py-1.5 rounded-full text-xs sm:text-sm font-medium transition whitespace-nowrap ${isActive
                       ? "bg-white text-black shadow-sm"
                       : "text-gray-400 hover:bg-gray-800 hover:text-white"
-                  }`}
+                    }`}
                 >
                   {link.name}
                 </Link>
