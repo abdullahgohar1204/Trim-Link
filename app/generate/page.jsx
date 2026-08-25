@@ -1,5 +1,6 @@
 "use client";
 
+import { Toaster, toast } from "react-hot-toast";
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
@@ -69,10 +70,18 @@ function GenerateContent() {
 
         if (data.success) {
           setGeneratedUrl(data.shortUrl);
+          toast.success("Link trimmed !", {
+            icon: "✅",
+            style: { borderColor: "#22c55e" },
+          });
         } else {
           // Dark-themed inline error handling matching site styling
           if (data.message && data.message.toLowerCase().includes("taken")) {
             setErrorMessage(`"${shortUrl}" is already taken. Please choose another.`);
+            toast.error("Short name already taken!", {
+              icon: "❌",
+              style: { borderColor: "#ef4444" },
+            });
           } else {
             setErrorMessage(data.message || "Failed to generate link.");
           }
@@ -89,7 +98,10 @@ function GenerateContent() {
   const handleCopy = () => {
     if (generatedUrl) {
       navigator.clipboard.writeText(generatedUrl);
-      setCopied(true);
+      toast.success("Copied", {
+        icon: "✅",
+        style: { borderColor: "#22c55e" },
+      }); setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
   };
@@ -232,14 +244,45 @@ function GenerateContent() {
 // 2. Default export wrapped in Suspense for Next.js build requirements
 export default function Generate() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-[80vh] flex items-center justify-center text-white">
-          Loading...
-        </div>
-      }
-    >
-      <GenerateContent />
-    </Suspense>
+    <>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: "#111",
+            color: "#fff",
+            border: "1px solid #333",
+            borderRadius: "12px",
+            padding: "14px 20px",
+            fontSize: "14px",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.8)",
+          },
+          success: {
+            duration: 2500,
+            style: {
+              borderColor: "#22c55e",
+              color: "#22c55e",
+            },
+          },
+          error: {
+            duration: 3500,
+            style: {
+              borderColor: "#ef4444",
+              color: "#ef4444",
+            },
+          },
+        }}
+      />
+      <Suspense
+        fallback={
+          <div className="min-h-[80vh] flex items-center justify-center text-white">
+            Loading...
+          </div>
+        }
+      >
+        <GenerateContent />
+      </Suspense>
+    </>
   );
 }
