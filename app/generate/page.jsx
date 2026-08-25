@@ -103,7 +103,7 @@ function GenerateContent() {
   };
 
   return (
-    <main className="min-h-[85vh] flex items-center justify-center px-4 py-10 relative overflow-hidden bg-gradient-to-b from-zinc-950 via-black to-zinc-950">
+    <main className="min-h-[85vh] flex items-center justify-center px-4 py-10 relative overflow-hidden bg-linear-to-b from-zinc-950 via-black to-zinc-950">
 
       {/* Ambient Background Glow (Design Point #2) */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-lime-500/10 rounded-full blur-[120px] pointer-events-none"></div>

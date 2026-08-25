@@ -22,7 +22,7 @@ export default function Home() {
       <section className="relative pt-12 pb-20 px-4 flex flex-col items-center text-center">
 
         {/* Glow Effects */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-lime-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-lime-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
 
         {/* Badge */}
         <div className="inline-flex items-center gap-2 bg-lime-500/10 border border-lime-500/20 rounded-full px-4 py-1.5 text-xs sm:text-sm text-lime-400 mb-6 shadow-sm">
@@ -64,7 +64,7 @@ export default function Home() {
         <div className="mt-8 flex items-center gap-3 text-xs sm:text-sm text-zinc-500 font-mono">
           <span className="bg-zinc-900 px-3 py-1 rounded-lg border border-zinc-800 text-zinc-400">trimlink.com/xyz99</span>
           <span>→</span>
-          <span className="text-zinc-400 truncate max-w-[200px] sm:max-w-xs">https://your-super-long-annoying-url.com/blog/post-id-12345</span>
+          <span className="text-zinc-400 truncate max-w-50 sm:max-w-xs">https://your-super-long-annoying-url.com/blog/post-id-12345</span>
         </div>
       </section>
 
@@ -129,8 +129,8 @@ export default function Home() {
             </ul>
           </div>
 
-          <div className="bg-gradient-to-br from-zinc-900 to-black border border-zinc-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden flex flex-col justify-center items-center text-center">
-            <div className="absolute inset-0 bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:16px_16px] opacity-30"></div>
+          <div className="bg-linear-to-br from-zinc-900 to-black border border-zinc-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden flex flex-col justify-center items-center text-center">
+            <div className="absolute inset-0 bg-[radial-gradient(#27272a_1px,transparent_1px)] bg-size-[16px_16px] opacity-30"></div>
             <div className="relative z-10">
               <div className="w-16 h-16 bg-lime-500/10 border border-lime-500/20 rounded-2xl flex items-center justify-center text-lime-400 text-2xl mx-auto mb-4">
                 ⚡

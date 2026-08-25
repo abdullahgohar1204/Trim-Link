@@ -1,6 +1,5 @@
 import React from "react";
 
-// Page Metadata for SEO
 export const metadata = {
   title: "Contact Us",
   description:
@@ -37,7 +36,7 @@ export default function Contact() {
         </div>
 
         {/* Direct Contact Email Card */}
-        <div className="mt-8 pt-6 border-t border-zinc-800/80 bg-zinc-900/50 rounded-2xl p-5 border border-zinc-800/60">
+        <div className="mt-8 pt-6 border-t border-zinc-800/60 bg-zinc-900/50 rounded-2xl p-5 border border-zinc-800/60">
           <p className="text-zinc-400 text-xs sm:text-sm font-medium mb-2 uppercase tracking-wider">
             📧 Email Us Directly
           </p>

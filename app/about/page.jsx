@@ -10,7 +10,7 @@ export const metadata = {
 export default function About() {
   return (
     <main className="min-h-[80vh] flex items-center justify-center px-3 sm:px-4 py-8">
-      <div className="relative bg-black/80 backdrop-blur-xl border border-zinc-800/80 rounded-3xl p-6 sm:p-10 max-w-2xl w-full shadow-2xl">
+      <div className="relative bg-black/80 backdrop-blur-xl border border-zinc-800/80 rounded-3xl p-6 sm:px-10 max-w-2xl w-full shadow-2xl">
 
         {/* Lime Accent Badge */}
         <div className="flex justify-center mb-4">
@@ -20,10 +20,18 @@ export default function About() {
           </span>
         </div>
 
-        {/* Title */}
-        <h1 className="text-2xl sm:text-3xl font-black text-white text-center tracking-tight mb-6">
-          About Trim<span className="text-lime-400">Link</span>
-        </h1>
+        {/* Title with Inline Brand Icon */}
+        <div className="flex justify-center mb-6">
+          <h1 className="flex items-center gap-2.5 text-2xl sm:text-3xl font-black text-white tracking-tight">
+            About
+            <img
+              src="/icon.jpg"
+              alt="TrimLink Icon"
+              className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl object-cover shadow-[0_0_15px_rgba(163,230,53,0.3)] border border-zinc-800 inline-block align-middle"
+            />
+            <span className="text-lime-400">TrimLink</span>
+          </h1>
+        </div>
 
         {/* Description Paragraphs */}
         <div className="space-y-4 text-zinc-400 text-center text-sm sm:text-base leading-relaxed">

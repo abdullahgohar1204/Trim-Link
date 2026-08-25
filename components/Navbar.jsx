@@ -26,8 +26,12 @@ const Navbar = () => {
         <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-8 items-center">
 
           {/* Brand Logo */}
-          <Link href={"/"} className="group flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-lime-400 shadow-[0_0_12px_rgba(163,230,53,0.8)] group-hover:scale-125 transition-transform"></span>
+          <Link href={"/"} className="group flex items-center gap-2.5">
+            <img
+              src="/icon.jpg"
+              alt="TrimLink Logo"
+              className="w-7 h-7 rounded-lg object-cover shadow-[0_0_12px_rgba(163,230,53,0.4)] group-hover:scale-110 transition-transform"
+            />
             <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
               Trim<span className="text-lime-400">Link</span>
             </h1>
