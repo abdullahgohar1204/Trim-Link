@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function Generate() {
+// 1. Inner component containing form state & hooks
+function GenerateContent() {
   const searchParams = useSearchParams();
   const [originalUrl, setOriginalUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
@@ -136,11 +137,10 @@ export default function Generate() {
               type="button"
               onClick={handleCopy}
               disabled={!generatedUrl}
-              className={`w-full sm:w-auto px-5 py-2.5 rounded-lg transition whitespace-nowrap text-sm flex items-center justify-center gap-1.5 ${
-                generatedUrl
-                  ? "bg-gray-800 hover:bg-gray-700 text-white cursor-pointer"
-                  : "bg-gray-900 text-gray-600 cursor-not-allowed"
-              }`}
+              className={`w-full sm:w-auto px-5 py-2.5 rounded-lg transition whitespace-nowrap text-sm flex items-center justify-center gap-1.5 ${generatedUrl
+                ? "bg-gray-800 hover:bg-gray-700 text-white cursor-pointer"
+                : "bg-gray-900 text-[#666] cursor-not-allowed"
+                }`}
             >
               <span>{copied ? "✓" : "📋"}</span>
               <span>{copied ? "Copied!" : "Copy"}</span>
@@ -152,15 +152,23 @@ export default function Generate() {
         <button
           onClick={handleGenerate}
           disabled={!isValidUrl(originalUrl)}
-          className={`w-full font-semibold py-3 rounded-lg transition active:scale-95 text-sm sm:text-base ${
-            isValidUrl(originalUrl)
-              ? "bg-white text-black hover:bg-gray-200 cursor-pointer"
-              : "bg-gray-800 text-gray-500 cursor-not-allowed"
-          }`}
+          className={`w-full font-semibold py-3 rounded-lg transition active:scale-95 text-sm sm:text-base ${isValidUrl(originalUrl)
+            ? "bg-white text-black hover:bg-gray-200 cursor-pointer"
+            : "bg-gray-800 text-gray-500 cursor-not-allowed"
+            }`}
         >
           Generate
         </button>
       </div>
     </div>
+  );
+}
+
+// 2. Default export wrapped in Suspense for Next.js build requirement
+export default function Generate() {
+  return (
+    <Suspense fallback={<div className="min-h-[80vh] flex items-center justify-center text-white">Loading...</div>}>
+      <GenerateContent />
+    </Suspense>
   );
 }
